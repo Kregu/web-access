@@ -6,10 +6,17 @@ import (
     "os"
 )
 
-var tpl = template.Must(template.ParseFiles("index.html"))
+var index = template.Must(template.ParseFiles("index.html"))
+var form = template.Must(template.ParseFiles("form.html"))
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-    tpl.Execute(w, nil)
+func indexHandler(writer http.ResponseWriter, request *http.Request) {
+    if request.Method == http.MethodGet {
+        index.Execute(writer, nil)
+    } else if request.Method == http.MethodPost {
+        request.ParseForm()
+        data1 := request.Form["Router_reset"][0]      
+        form.Execute(writer, data1)
+    }
 }
 
 func main() {
