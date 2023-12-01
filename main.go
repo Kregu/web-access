@@ -14,8 +14,10 @@ func indexHandler(writer http.ResponseWriter, request *http.Request) {
         index.Execute(writer, nil)
     } else if request.Method == http.MethodPost {
         request.ParseForm()
-        data1 := request.Form["Router_reset"][0]      
-        form.Execute(writer, data1)
+        data1 := request.Form["router"][0]
+        data2 := request.Form["wan"][0]
+        data3 := data1 + " " + data2
+        form.Execute(writer, data3)
     }
 }
 
